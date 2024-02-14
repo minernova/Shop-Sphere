@@ -1,20 +1,18 @@
 import React from "react";
 
-export default function FormInput({ label, name, type, defaultValue }) {
+const FormInput = ({ label, name, type, defaultValue, size }) => {
   return (
-    <div>
-      <label className="form-control w-full max-w-xs">
-        <div className="label">
-          <span className="label-text">{label}</span>
-        </div>
-        <input
-          type={type}
-          placeholder={defaultValue}
-          name={name}
-          required
-          className="input input-bordered w-full max-w-xs"
-        />
+    <div className='form-control'>
+      <label htmlFor={name} className='label'>
+        <span className='label-text capitalize'>{label}</span>
       </label>
+      <input
+        type={type}
+        name={name}
+        defaultValue={defaultValue}
+        className={`input input-bordered ${size}`}
+      />
     </div>
   );
-}
+};
+export default FormInput;

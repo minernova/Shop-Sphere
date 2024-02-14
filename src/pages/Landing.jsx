@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { Profiler } from 'react'
 import { customFetch } from '../utils'
+import { FeaturedProducts, Hero } from '../components';
+import { useLoaderData } from 'react-router-dom';
 
 export const loader = async () => {
   const response=await customFetch.get('/products?featured=true')
@@ -9,6 +11,9 @@ export const loader = async () => {
 }
 export default function Landing() {
   return (
-    <div>Landing</div>
+    <div>
+      <Hero />
+      <FeaturedProducts/>
+    </div>
   )
 }
