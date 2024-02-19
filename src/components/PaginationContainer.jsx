@@ -38,7 +38,7 @@ const PaginationContainer = () => {
               className={`btn btn-xs sm:btn-md border-none join-item ${
                 pageNumber === page ? 'bg-base-300 border-base-300' : ''
               }`}
-            >
+            > 
               {pageNumber}
             </button>
           );
