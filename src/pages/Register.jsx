@@ -10,8 +10,8 @@ export const action = async ({ request }) => {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
   try {
-    // const response = await customFetch.post('/auth/local/register', data);
-    await delay(3000)
+    const response = await customFetch.post('/auth/local/register', data);
+    console.log(response);
     toast.success('account created successfully');
     return redirect('/login');
   } catch (error) {
