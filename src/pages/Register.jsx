@@ -33,9 +33,9 @@ const Register = () => {
         className='card w-96 py-8 px-8 bg-base-100 shadow-lg flex flex-col gap-y-4'
       >
         <h4 className='text-center text-3xl font-bold'>Register</h4>
-        <FormInput type='text' label='username' name='username' defaultValue='Ram Agrawal' />
-        <FormInput type='email' label='email' name='email' defaultValue='ram@comfy.com'/>
-        <FormInput type='password' label='password' name='password' defaultValue='passcode'/>
+        <FormInput type='text' label='username' name='username' defaultValue='' />
+        <FormInput type='email' label='email' name='email' defaultValue=''/>
+        <FormInput type='password' label='password' name='password' defaultValue=''/>
         <div className='mt-4'>
           <SubmitBtn text='register' />
         </div>
