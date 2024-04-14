@@ -12,78 +12,90 @@ import {
   Orders,
 } from "./pages";
 
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import {loader as landingLoader} from './pages/Landing'
-import {loader as singleProductLoader} from './pages/SingleProduct'
-import {loader as productsLoader} from './pages/Products'
-import {loader as checkoutLoader} from './pages/Checkout'
-import {loader as ordersLoader} from './pages/Orders'
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { loader as landingLoader } from "./pages/Landing";
+import { loader as singleProductLoader } from "./pages/SingleProduct";
+import { loader as productsLoader } from "./pages/Products";
+import { loader as checkoutLoader } from "./pages/Checkout";
+import { loader as ordersLoader } from "./pages/Orders";
 
-
-import {action as regiterAction} from './pages/Register'
-import {action as loginAction} from './pages/Login'
-import {action as checkoutAction} from './components/CheckoutForm'
-import {store} from './store'
-
+import { action as regiterAction } from "./pages/Register";
+import { action as loginAction } from "./pages/Login";
+import { action as checkoutAction } from "./components/CheckoutForm";
+import { store } from "./store";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5,
+    },
+  },
+});
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <HomeLayout />,
     errorElement: <Error />,
     children: [
       {
         index: true,
         element: <Landing />,
-        errorElement:<Error/>,
-        loader: landingLoader
+        errorElement: <Error />,
+        loader: landingLoader(queryClient),
       },
       {
-        path: 'products',
+        path: "products",
         element: <Products />,
-        loader:productsLoader,
+        loader: productsLoader(queryClient),
       },
       {
-        path: 'products/:id',
+        path: "products/:id",
         element: <SingleProduct />,
-        loader:singleProductLoader,
+        loader: singleProductLoader(queryClient),
       },
       {
-        path: 'cart',
+        path: "cart",
         element: <Cart />,
       },
-      { path: 'about', element: <About /> },
+      { path: "about", element: <About /> },
       {
-        path: 'checkout',
+        path: "checkout",
         element: <Checkout />,
         loader: checkoutLoader(store),
-        action: checkoutAction(store)
+        action: checkoutAction(store,queryClient),
       },
       {
-        path: 'orders',
+        path: "orders",
         element: <Orders />,
-        loader: ordersLoader(store)
+        loader: ordersLoader(store,queryClient),
       },
     ],
   },
   {
-    path: '/login',
+    path: "/login",
     element: <Login />,
     errorElement: <Error />,
-    action: loginAction(store)
+    action: loginAction(store),
   },
   {
-    path: '/register',
+    path: "/register",
     element: <Register />,
     errorElement: <Error />,
-    action:regiterAction
+    action: regiterAction,
   },
 ]);
+
+
+
 function App() {
-  return  <RouterProvider router={router} />
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+      <ReactQueryDevtools initialIsOpen={false}/>
+    </QueryClientProvider>
+  );
 }
 
 export default App;

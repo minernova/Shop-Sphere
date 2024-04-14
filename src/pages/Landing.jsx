@@ -2,13 +2,20 @@ import React, { Profiler } from 'react'
 import { customFetch } from '../utils'
 import { FeaturedProducts, Hero } from '../components';
 import { useLoaderData } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 
-export const loader = async () => {
-  const response=await customFetch.get('/products?featured=true')
-  // console.log(response.data.data);
-  
-  return {products:response.data.data};
-}
+
+const featuredProductsQuery = {
+  queryKey: ['featuredProducts'],
+  queryFn: () => customFetch('/products?featured=true'),
+};
+
+export const loader = (queryClient) => async () => {
+  const response = await queryClient.ensureQueryData(featuredProductsQuery);
+  const products = response.data.data;
+  return { products };
+};
+
 export default function Landing() {
   return (
     <div>
